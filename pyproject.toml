@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "retrotetris"
+version = "0.1.0"
+description = "A dark, multi-panel Tetris TUI for your terminal."
+readme = "README.md"
+requires-python = ">=3.8"
+license = { text = "MIT" }
+authors = [
+    { name = "ImmanuelJoya" }
+]
+keywords = ["tetris", "terminal", "tui", "game", "curses"]
+classifiers = [
+    "Environment :: Console :: Curses",
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+    "Topic :: Games/Entertainment :: Puzzle Games",
+]
+dependencies = [
+    "windows-curses; sys_platform == 'win32'",
+]
+
+[project.urls]
+Homepage = "https://github.com/ImmanuelJoya/tetris-"
+
+[project.scripts]
+tetris = "retrotetris:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]

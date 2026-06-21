@@ -1,80 +1,82 @@
-# RETRO TETRIS — Terminal Edition
+# RETRO TETRIS — Dark Terminal Edition
 
-A classic falling-blocks game with a retro arcade look, playable entirely
-in your terminal. Pure Python standard library — no dependencies, no
-internet connection needed to play.
+A multi-panel Tetris TUI for your terminal, forced to a dark color scheme
+regardless of your terminal's theme. Pure Python standard library on
+Mac/Linux — no dependencies. Windows needs one extra package (below).
 
 ## Install
 
-1. Download `retrotetris.py` and `install.sh` into the same folder.
-2. In that folder, run:
-
-   ```bash
-   chmod +x install.sh
-   ./install.sh
-   ```
-
-3. Start playing:
-
-   ```bash
-   retrotetris
-   ```
-
-If `install.sh` warns that `~/.local/bin` isn't on your `PATH`, follow the
-one-line fix it prints, then reopen your terminal.
-
-### Prefer not to install anything?
-
-Just run it directly, no install step needed:
+### Option A — straight from GitHub (no PyPI account needed)
 
 ```bash
-python3 retrotetris.py
+pip install git+https://github.com/ImmanuelJoya/tetris-.git
 ```
 
-### Windows users
-
-The `curses` library isn't built into Windows Python. Install the
-community package first:
+### Option B — from PyPI (once published)
 
 ```bash
+pip install retrotetris
+```
+
+Either way, this installs a `tetris` command on your PATH.
+
+### Windows
+
+`curses` isn't built into Windows Python, so install the community
+package first — `pyproject.toml` already lists it as a Windows-only
+dependency, so a plain `pip install` (Option A or B above) pulls it in
+automatically. If you ever need it manually:
+
+```powershell
 pip install windows-curses
 ```
 
-Then run `python retrotetris.py` from PowerShell, Command Prompt, or
-Windows Terminal.
+## Play
+
+```bash
+tetris
+```
 
 ## Controls
 
-| Key                  | Action              |
-|-----------------------|--------------------|
-| Left/Right or A/D     | Move                |
-| Down or S              | Soft drop           |
-| Up/W or X              | Rotate clockwise    |
-| Z                       | Rotate counter-clockwise |
-| Space                   | Hard drop           |
-| P                        | Pause / Resume      |
-| Q                        | Quit                |
-| R                        | Play again (on game over screen) |
+| Key                  | Action                    |
+|-----------------------|---------------------------|
+| H / Left / A           | Move left                 |
+| L / Right / D          | Move right                |
+| J / Down / S           | Soft drop                 |
+| K / Up / W / X         | Rotate clockwise          |
+| Z                      | Rotate counter-clockwise  |
+| Space                  | Hard drop                 |
+| P                      | Pause / Resume            |
+| Q                      | Quit                      |
 
 ## Features
 
-- 7 standard tetromino pieces with a fair "bag" randomizer (no long
-  unlucky droughts of one piece)
-- Ghost piece preview showing where your piece will land
-- Next-piece preview
-- Increasing speed as you level up
-- High score saved to `~/.retrotetris_highscore` and persists between
-  sessions
+- 7 standard tetrominoes with a fair "bag" randomizer
+- Ghost piece showing where the current piece will land
+- Stats / Next / Help panels in a bordered, dark-themed layout
+- Selectable starting level (0–9) with speed that increases as you clear lines
+- High score saved to `~/.retrotetris_highscore`, persists between sessions
 
-## Notes
+## Requirements
 
-Your terminal window should be at least 48 columns × 24 rows. If it's
-too small, the game will tell you and exit gracefully rather than
-rendering incorrectly.
+- Python 3.8+
+- A terminal at least 72 columns × 24 rows (it'll tell you if yours is
+  too small)
 
 ## Uninstall
 
 ```bash
-rm ~/.local/bin/retrotetris
+pip uninstall retrotetris
 rm ~/.retrotetris_highscore   # optional, clears your high score
 ```
+
+## Publishing to PyPI (maintainer notes)
+
+```bash
+python -m pip install --upgrade build twine
+python -m build
+twine upload dist/*
+```
+
+Requires a free PyPI account and an API token (https://pypi.org/account/register/).
